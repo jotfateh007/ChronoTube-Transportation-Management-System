@@ -1,0 +1,62 @@
+/* Body in column layout is fine if you want table on top, forms below */
+body {
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column; /* Table stacked above the forms */
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Table styling */
+table {
+    width: 80%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+/* Form container to place the two forms side by side */
+#form-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;     /* let them wrap on smaller screens */
+    margin-top: 20px;
+}
+
+/* Each form box */
+.form-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 300px;  /* ensures it doesn’t shrink too much */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+form label,
+form input {
+    margin-bottom: 10px;
+}
+form input {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+form button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+form button:hover {
+    background-color: #218838;
+}

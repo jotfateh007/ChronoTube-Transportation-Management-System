@@ -1,0 +1,112 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Passengers</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Reference the CSS file from the public folder -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<nav>
+        <div>
+            <button><a href="../">Home</a></button>
+            <button class = "selectedPage"><a href="../passengers.html">Manage Passengers</a></button>
+            <button><a href="transportStations.html">Manage Transport Stations</a></button>
+            <button><a href="../trains.html">Manage Trains</a></button>
+            <button ><a href="../routes.html">Manage Routes</a></button>
+            <button><a href="./boardingRecords.html">Manage Boarding Records</a></button>
+            <button><a href="../tickets.html">Manage Tickets</a></button>
+            <button><a href="../stationRoutes.html">Manage Station Routes</a></button>
+            <button><a href="../stationTrains.html">Manage Station Trains</a></button>
+        </div>
+</nav>
+
+<h1>View Passengers</h1>
+<table id="passenger-table" border="1">
+    {{!-- Header section --}}
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.PassengerID}}</td>
+            <td>{{this.FirstName}}</td>
+            <td>{{this.LastName}}</td>
+            <td>{{this.Email}}</td>
+            <td>{{this.Phone}}</td>
+            <td>{{this.DateOfBirth}}</td>
+            
+            <td><button onclick="deletePassenger({{this.PassengerID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="../public/js/delete_passenger.js"></script>
+<div id="form-container">
+<div class ="form-box">
+    <h2>Add Passenger</h2>
+    <form id="addPassengerForm" method="POST" action="/add-passenger-form">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="FirstName" required><br><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="LastName" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="Email" required><br><br>
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="Phone" required><br><br>
+
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="DateOfBirth" required><br><br>
+
+        <button type="submit">Add Passenger</button>
+    </form>
+</div>
+<div class = "form-box">
+<h2>Update Passenger</h2>
+<p>Select a Passenger ID and update its details.</p>
+<form id="updatePassengerForm">
+    <label for="updatePassengerId">Passenger ID: </label>
+    <select name="updatePassengerId" id="updatePassengerId">
+        <option value="">Select a Passenger</option>
+        {{#if passengers}}
+            {{#each passengers}}
+                <option value="{{this.PassengerID}}">{{this.PassengerID}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No passengers available</option>
+        {{/if}}
+    </select>
+    <br><br>
+    
+    <label for="newFirstName">New First Name:</label>
+    <input type="text" id="newFirstName" name="newFirstName" required><br><br>
+    
+    <label for="newLastName">New Last Name:</label>
+    <input type="text" id="newLastName" name="newLastName" required><br><br>
+    
+    <label for="newEmail">New Email:</label>
+    <input type="email" id="newEmail" name="newEmail" required><br><br>
+    
+    <label for="newPhone">New Phone:</label>
+    <input type="text" id="newPhone" name="newPhone" required><br><br>
+    
+    <label for="newDateOfBirth">New Date of Birth:</label>
+    <input type="date" id="newDateOfBirth" name="newDateOfBirth" required><br><br>
+    
+    <button type="submit">Update Passenger"</button>
+</form>
+</div>
+</div>
+
+<script src="../public/js/update_passenger.js"></script>

@@ -1,0 +1,139 @@
+<!-- tickets.hbs -->
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Tickets</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Reference the CSS file from the public folder -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<nav>
+        <div>
+            <button><a href="../">Home</a></button>
+            <button><a href="../passengers.html">Manage Passengers</a></button>
+            <button><a href="transportStations.html">Manage Transport Stations</a></button>
+            <button><a href="../trains.html">Manage Trains</a></button>
+            <button><a href="../routes.html">Manage Routes</a></button>
+            <button><a href="./boardingRecords.html">Manage Boarding Records</a></button>
+            <button class = "selectedPage"><a href="../tickets.html">Manage Tickets</a></button>
+            <button><a href="../stationRoutes.html">Manage Station Routes</a></button>
+            <button><a href="../stationTrains.html">Manage Station Trains</a></button>
+        </div>
+</nav>
+
+
+
+{{!-- Create a table --}}
+<h1>View Tickets</h1>
+<table id = "tickets-table" border="1">
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the info in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.TicketID}}</td>
+            <td>{{this.PassengerID}}</td>
+            <td>{{this.FirstName}}</td>
+            <td>{{this.LastName}}</td>
+            <td>{{this.Phone}}</td>
+            <td>{{this.RouteID}}</td>
+            <td>{{this.RouteName}}</td>
+            <td><button onclick="deleteTicket({{this.TicketID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="../public/js/delete_ticket.js"></script>
+ <div>
+        <h2>Add Ticket</h2>
+        <form id="addTicketForm" method="POST" action="/add-ticket-form">
+            <label for="addPassengerId">Passenger ID: </label>
+            <select name="passengerId" id="addPassengerId" required>
+            <option value="">Select a Passenger ID</option>
+            {{#if passengers}}
+                {{#each passengers}}
+                    <option value="{{this.PassengerID}}">(ID: {{this.PassengerID}}) {{this.FirstName}} {{this.LastName}}</option>
+                {{/each}}
+            {{else}}
+                <option value="" disabled>No passenger available</option>
+            {{/if}}
+            </select>
+            <br><br>
+            <label for="addRouteId">Route ID: </label>
+            <select name="routeId" id="addRouteId" required>
+            <option value="">Select a Route ID</option>
+            {{#if routes}}
+                {{#each routes}}
+                    <option value="{{this.RouteID}}">(ID: {{this.RouteID}}) {{this.RouteName}}</option>
+                {{/each}}
+            {{else}}
+                <option value="" disabled>No routes available</option>
+            {{/if}}
+            </select>
+            <br><br>
+
+            <button type="submit">Add Ticket</button>
+        </form>
+
+</div>
+
+<h2>Updating A Ticket</h2>
+<p>To update a specific ticket, select the ticket ID from the drop-down menu on the left and update the details on the right.</p>
+<form id="updateTicketForm">
+
+    <label for="updateTicketId">Ticket ID: </label>
+    <select name="updateTicketId" id="updateTicketId">
+    <option value="">Select a Ticket</option>
+    {{#if tickets}}
+        {{#each tickets}}
+            <option value="{{this.TicketID}}">(ID: {{this.TicketID}})</option>
+        {{/each}}
+    {{else}}
+        <option value="" disabled>No tickets available</option>
+    {{/if}}
+    </select>
+    <br><br>
+        <label for="updatePassengerId">Passenger ID: </label>
+        <select name="updatePassengerId" id="updatePassengerId" required>
+        <option value="">Select a Passenger ID</option>
+        {{#if passengers}}
+            {{#each passengers}}
+                <option value="{{this.PassengerID}}">(ID: {{this.PassengerID}}) {{this.FirstName}} {{this.LastName}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No passenger available</option>
+        {{/if}}
+        </select>
+        <br><br>
+        <label for="updateRouteId">Route ID: </label>
+        <select name="updateRouteId" id="updateRouteId" required>
+        <option value="">Select a Route ID</option>
+        {{#if routes}}
+            {{#each routes}}
+                <option value="{{this.RouteID}}">(ID: {{this.RouteID}}) {{this.RouteName}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No route available</option>
+        {{/if}}
+        </select>
+        <br><br>
+
+    <button type="submit">Update Ticket</button>
+</form>
+
+<script src="../public/js/update_ticket.js"></script>

@@ -1,0 +1,166 @@
+<!-- stationRoutes.hbs -->
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Station Routes Records</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Reference the CSS file from the public folder -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<nav>
+        <div>
+            <button><a href="../">Home</a></button>
+            <button><a href="../passengers.html">Manage Passengers</a></button>
+            <button><a href="transportStations.html">Manage Transport Stations</a></button>
+            <button><a href="../trains.html">Manage Trains</a></button>
+            <button><a href="../routes.html">Manage Routes</a></button>
+            <button><a href="./boardingRecords.html">Manage Boarding Records</a></button>
+            <button><a href="../tickets.html">Manage Tickets</a></button>
+            <button class = "selectedPage"><a href="../stationRoutes.html">Manage Station Routes</a></button>
+            <button><a href="../stationTrains.html">Manage Station Trains</a></button>
+        </div>
+</nav>
+
+
+
+{{!-- Create a table --}}
+<h1>View Station Routes Path</h1>
+<table id = "stationRoutes-table" border="1">
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the data in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.PathID}}</td>
+            <td>{{this.OriginStationID}}</td>
+            <td>{{this.OriginStationName}}</td>
+            <td>{{this.DestinationStationID}}</td>
+            <td>{{this.DestinationStationName}}</td>
+            <td>{{this.RouteID}}</td>
+            <td>{{this.RouteName}}</td>
+            <td><button onclick="deleteStationRoute({{this.PathID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="../public/js/delete_stationRoute.js"></script>
+ <div>
+        {{!-- Create the add form --}}
+        <h2>Add Path to a Station</h2>
+        <form id="addStationRouteForm" method="POST" action="/add-stationRoute-form">
+            <label for="addStationId">Station ID: </label>
+            <select name="startStationId" id="addStationId" required>
+            <option value="">Select a Start Station ID</option>
+            {{#if startStations}}
+                {{#each startStations}}
+                    <option value="{{this.StationID}}">(ID: {{this.StationID}}) {{this.StationName}}</option>
+                {{/each}}
+            {{else}}
+                <option value="" disabled>No stations available</option>
+            {{/if}}
+            </select>
+            <br><br>
+            <label for="addSecondStationId">Station ID: </label>
+            <select name="endStationId" id="addSecondStationId" required>
+            <option value="">Select an End Station ID</option>
+            {{#if endStations}}
+                {{#each endStations}}
+                    <option value="{{this.StationID}}">(ID: {{this.StationID}}) {{this.StationName}}</option>
+                {{/each}}
+            {{else}}
+                <option value="" disabled>No stations available</option>
+            {{/if}}
+            </select>
+            <br><br>
+            <label for="addRouteId">Route ID: </label>
+            <select name="routeId" id="addRouteId" required>
+            <option value="">Select a Route ID</option>
+            {{#if routes}}
+                {{#each routes}}
+                    <option value="{{this.RouteID}}">(ID: {{this.RouteID}}) {{this.RouteName}}</option>
+                {{/each}}
+            {{else}}
+                <option value="" disabled>No routes available</option>
+            {{/if}}
+            </select>
+            <br><br>
+
+            <button type="submit">Add Path to Station</button>
+        </form>
+
+</div>
+{{!-- Create the update form --}}
+<h2>Updating A Path</h2>
+<p>To update a specific path, select the path ID from the drop-down menu on the left and update the path details on the right.</p>
+<form id="updateStationRouteForm">
+
+    <label for="updateStationRouteId">Path ID: </label>
+    <select name="updateStationRouteId" id="updateStationRouteId" required>
+    <option value="">Select a Path</option>
+    {{#if paths}}
+        {{#each paths}}
+            <option value="{{this.PathID}}">(ID: {{this.PathID}})</option>
+        {{/each}}
+    {{else}}
+        <option value="" disabled>No paths available</option>
+    {{/if}}
+    </select>
+    <br><br>
+
+        <label for="updateStartStationId">Start Station ID: </label>
+        <select name="updateStartStationId" id="updateStartStationId" required>
+        <option value="">Select a Station ID</option>
+        {{#if startStations}}
+            {{#each startStations}}
+                <option value="{{this.StationID}}">(ID: {{this.StationID}}) {{this.StationName}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No stations available</option>
+        {{/if}}
+        </select>
+        <br><br>
+        <label for="updateEndStationId">Destination Station ID: </label>
+        <select name="updateEndStationId" id="updateEndStationId" required>
+        <option value="">Select a Station ID</option>
+        {{#if endStations}}
+            {{#each endStations}}
+                <option value="{{this.StationID}}">(ID: {{this.StationID}}) {{this.StationName}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No stations available</option>
+        {{/if}}
+        </select>
+        <br><br>
+
+        <label for="updateRouteId">Route ID: </label>
+        <select name="updateRouteId" id="updateRouteId" required>
+        <option value="">Select a Route ID</option>
+        {{#if routes}}
+            {{#each routes}}
+                <option value="{{this.RouteID}}">(ID: {{this.RouteID}}) {{this.RouteName}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No routes available</option>
+        {{/if}}
+        </select>
+        <br><br>
+
+    <button type="submit">Update Path</button>
+</form>
+
+<script src="../public/js/update_stationRoute.js"></script>

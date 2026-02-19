@@ -1,0 +1,137 @@
+<!-- stationTrains.hbs -->
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Station Trains Records</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Reference the CSS file from the public folder -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<nav>
+        <div>
+            <button><a href="../">Home</a></button>
+            <button><a href="../passengers.html">Manage Passengers</a></button>
+            <button><a href="transportStations.html">Manage Transport Stations</a></button>
+            <button><a href="../trains.html">Manage Trains</a></button>
+            <button><a href="../routes.html">Manage Routes</a></button>
+            <button><a href="./boardingRecords.html">Manage Boarding Records</a></button>
+            <button><a href="../tickets.html">Manage Tickets</a></button>
+            <button><a href="../stationRoutes.html">Manage Station Routes</a></button>
+            <button class = "selectedPage"><a href="../stationTrains.html">Manage Station Trains</a></button>
+        </div>
+</nav>
+
+
+
+{{!-- Create a table --}}
+<h1>View Trains Serving Stations </h1>
+<table id = "stationTrains-table" border="1">
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the data in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.StationServedID}}</td>
+            <td>{{this.StationID}}</td>
+            <td>{{this.StationName}}</td>
+            <td>{{this.TrainID}}</td>
+            <td>{{this.TrainName}}</td>
+            <td><button onclick="deleteStationTrain({{this.StationServedID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="../public/js/delete_stationTrain.js"></script>
+ <div>
+        {{!-- Create the add form --}}
+        <h2>Add Path to a Station</h2>
+        <form id="addStationTrainForm" method="POST" action="/add-stationTrain-form">
+            <label for="addStationId">Station ID: </label>
+            <select name="stationId" id="addStationId" required>
+            <option value="">Select a Station ID</option>
+            {{#if stations}}
+                {{#each stations}}
+                    <option value="{{this.StationID}}">(ID: {{this.StationID}}) {{this.StationName}}</option>
+                {{/each}}
+            {{else}}
+                <option value="" disabled>No stations available</option>
+            {{/if}}
+            </select>
+            <br><br>
+            <label for="addTrainId">Train ID: </label>
+            <select name="trainId" id="addTrainId" required>
+            <option value="">Select a Train ID</option>
+            {{#if trains}}
+                {{#each trains}}
+                    <option value="{{this.TrainID}}">(ID: {{this.TrainID}}) {{this.TrainName}}</option>
+                {{/each}}
+            {{else}}
+                <option value="" disabled>No trains available</option>
+            {{/if}}
+            </select>
+            <br><br>
+
+            <button type="submit">Add Train to a Station</button>
+        </form>
+
+</div>
+{{!-- Create the update form --}}
+<h2>Updating A Train to a Station</h2>
+<p>To update a specific assignment, select the StationServed ID from the drop-down menu on the left and update the details on the right.</p>
+<form id="updateStationTrainForm">
+    <label for="updateStationTrainId">Station Served ID: </label>
+    <select name="updateStationTrainId" id="updateStationTrainId" required>
+    <option value="">Select a Station Served ID</option>
+    {{#if stationServed}}
+        {{#each stationServed}}
+            <option value="{{this.StationServedID}}">(ID: {{this.StationServedID}})</option>
+        {{/each}}
+    {{else}}
+        <option value="" disabled>No stations served available</option>
+    {{/if}}
+    </select>
+    <br><br>
+        <label for="updateStationId">Station ID: </label>
+        <select name="updateStationId" id="updateStationId" required>
+        <option value="">Select a Station ID</option>
+        {{#if stations}}
+            {{#each stations}}
+                <option value="{{this.StationID}}">(ID: {{this.StationID}}) {{this.StationName}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No stations available</option>
+        {{/if}}
+        </select>
+        <br><br>
+        <label for="updateTrainId">Train ID: </label>
+        <select name="updateTrainId" id="updateTrainId" required>
+        <option value="">Select a Train ID</option>
+        {{#if trains}}
+            {{#each trains}}
+                <option value="{{this.TrainID}}">(ID: {{this.TrainID}}) {{this.TrainName}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No trains available</option>
+        {{/if}}
+        </select>
+        <br><br>
+
+    <button type="submit">Update Station Served</button>
+</form>
+
+<script src="../public/js/update_stationTrain.js"></script>

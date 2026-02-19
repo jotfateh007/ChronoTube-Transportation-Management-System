@@ -1,0 +1,106 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Transport Stations</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<nav>
+    <div>
+        <button><a href="../">Home</a></button>
+        <button><a href="../passengers.html">Manage Passengers</a></button>
+        <button class="selectedPage"><a href="transportStations.html">Manage Transport Stations</a></button>
+        <button><a href="../trains.html">Manage Trains</a></button>
+        <button><a href="../routes.html">Manage Routes</a></button>
+        <button><a href="./boardingRecords.html">Manage Boarding Records</a></button>
+        <button><a href="../tickets.html">Manage Tickets</a></button>
+        <button><a href="../stationRoutes.html">Manage Station Routes</a></button>
+        <button><a href="../stationTrains.html">Manage Station Trains</a></button>
+    </div>
+</nav>
+
+<h1>View Transport Stations</h1>
+<table id="transportStations-table" border="1">
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>{{@key}}</th>
+            {{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.StationID}}</td>
+            <td>{{this.StationName}}</td>
+            <td>{{this.Address}}</td>
+            <td>{{this.City}}</td>
+            <td>{{this.State}}</td>
+            <td>{{this.Country}}</td>
+            <td><button onclick="deleteStation({{this.StationID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="../public/js/delete_station.js"></script>
+
+<div id="form-container">
+    <div class="form-box">
+        <h2>Add Transport Station</h2>
+        <form id="addStationForm" method="POST" action="/add-station-form">
+            <label for="stationName">Station Name:</label>
+            <input type="text" id="stationName" name="StationName" required><br><br>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="Address" required><br><br>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="City" required><br><br>
+
+            <label for="state">State:</label>
+            <input type="text" id="state" name="State" required><br><br>
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="Country" required><br><br>
+
+            <button type="submit">Add Station</button>
+        </form>
+    </div>
+
+    <div class="form-box">
+        <h2>Updating A Transport Station</h2>
+        <p>Select a station ID from the dropdown and update the details.</p>
+        <form id="updateStationForm">
+            <label for="updateStationId">Station ID: </label>
+            <select name="updateStationId" id="updateStationId">
+                <option value="">Select a Station</option>
+                {{#if stations}}
+                    {{#each stations}}
+                        <option value="{{this.StationID}}">{{this.StationID}}</option>
+                    {{/each}}
+                {{else}}
+                    <option value="" disabled>No stations available</option>
+                {{/if}}
+            </select>
+            <br><br>
+
+            <label for="newStationName">New Station Name: </label>
+            <input type="text" id="newStationName" name="newStationName"><br><br>
+
+            <label for="newAddress">New Address: </label>
+            <input type="text" id="newAddress" name="newAddress"><br><br>
+
+            <label for="newCity">New City: </label>
+            <input type="text" id="newCity" name="newCity"><br><br>
+
+            <label for="newState">New State: </label>
+            <input type="text" id="newState" name="newState"><br><br>
+
+            <label for="newCountry">New Country: </label>
+            <input type="text" id="newCountry" name="newCountry"><br><br>
+
+            <button type="submit">Update Station</button> 
+        </form>
+        <script src="../public/js/update_station.js"></script>
+    </div>
+</div>

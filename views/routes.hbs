@@ -1,0 +1,96 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Routes</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Reference the CSS file from the public folder -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<nav>
+        <div>
+            <button><a href="../">Home</a></button>
+            <button><a href="../passengers.html">Manage Passengers</a></button>
+            <button><a href="transportStations.html">Manage Transport Stations</a></button>
+            <button><a href="../trains.html">Manage Trains</a></button>
+            <button class = "selectedPage"><a href="../routes.html">Manage Routes</a></button>
+            <button><a href="./boardingRecords.html">Manage Boarding Records</a></button>
+            <button><a href="../tickets.html">Manage Tickets</a></button>
+            <button><a href="../stationRoutes.html">Manage Station Routes</a></button>
+            <button><a href="../stationTrains.html">Manage Station Trains</a></button>
+        </div>
+</nav>
+
+{{!-- Create a table --}}
+<h1>View Routes</h1>
+<table id="routes-table" border="1">
+    {{!-- Header section --}}
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.RouteID}}</td>
+            <td>{{this.RouteName}}</td>
+            <td>{{this.Distance}}</td>
+            <td>{{this.EstimatedTravelTime}}</td>
+            <td><button onclick="deleteRoute({{this.RouteID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="../public/js/delete_route.js"></script>
+<div id="form-container">
+<div class ="form-box">
+    <h2>Add Route</h2>
+    <form id="addRouteForm" method="POST" action="/add-route-form">
+        <label for="routeName">Route Name:</label>
+        <input type="text" id="routeName" name="RouteName" required><br><br>
+
+        <label for="routeDistance">Distance (km):</label>
+        <input type="number" id="routeDistance" name="Distance" required><br><br>
+
+        <label for="EstimtedTravelTime">Estimated Travel Time:</label>
+        <input type="time" id="EstimatedTravelTime" name="EstimatedTravelTime"><br><br>
+
+        <button type="submit">Add Route</button>
+    </form>
+</div>
+<div class="form-box">
+<h2>Update Route</h2>
+<p>Select a route ID and update its details.</p>
+<form id="updateRouteForm">
+    <label for="updateRouteId">Route ID: </label>
+    <select name="updateRouteId" id="updateRouteId">
+        <option value="">Select a Route</option>
+        {{#if routes}}
+            {{#each routes}}
+                <option value="{{this.RouteID}}">{{this.RouteID}}</option>
+            {{/each}}
+        {{else}}
+            <option value="" disabled>No routes available</option>
+        {{/if}}
+    </select>
+    <br><br>
+    <label for="newRouteName">New Route Name:</label>
+    <input type="text" id="newRouteName" name="newRouteName"><br><br>
+
+    <label for="newRouteDistance">New Distance (km):</label>
+    <input type="number" id="newRouteDistance" name="newRouteDistance"><br><br>
+
+    <label for="newEstimatedTravelTime">New Estimated Travel Time:</label>
+    <input type="time" id="newEstimatedTravelTime" name="newEstimatedTravelTime"><br><br>
+
+    <button type="submit">Update Route</button>
+</form>
+</div>
+</div>
+<script src="../public/js/update_route.js"></script>
